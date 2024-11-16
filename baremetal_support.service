@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /opt/baremetal_support/baremetal_support.py
+ExecStart=/usr/bin/python3 /opt/baremetal_support/baremetal_support.py -p 80
 
 [Install]
 WantedBy=multi-user.target
