@@ -1,16 +1,24 @@
+.PHONY: help
+help:
+	@echo "Call one of the available targets:"
+	@sed -n 's/\(^[^.#[:space:]A-Z]*\):.*$$/\1/p' Makefile | uniq
 
+.PHONY: init
 init:
-	pip install -r requirements.txt
+	uv sync
 
+# Override to use uv, e.g. PYTHON_RUN="uv run"
+PYTHON_RUN ?=
+
+.PHONY: test
 test:
-	pycodestyle baremetal_support/baremetal_support.py
-	pycodestyle baremetal_support/bootscript.py
-	pycodestyle baremetal_support/lock.py
-	pycodestyle baremetal_support/jobid.py
-	pycodestyle tests/test_bootscript.py
-	pycodestyle tests/test_host_lock.py
-	pycodestyle tests/test_bootscript.py
-	pycodestyle tests/test_jobid.py
-	py.test -s --cov-report=term --cov=baremetal_support tests/ 
+	$(PYTHON_RUN) py.test -s --cov-report=term --cov=baremetal_support tests/
 
-.PHONY: init test
+.PHONY: tidy
+tidy: ## Format code and fix linting issues
+	ruff format
+	ruff check --fix
+
+.PHONY: check-types-ty
+check-types-ty: ## Run ty type checker
+	ty check

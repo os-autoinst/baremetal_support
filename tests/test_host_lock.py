@@ -21,7 +21,7 @@ def test_my_timer():
     assert not locks.is_locked(host0)
     token = locks.lock_host(host0, 6)
     assert locks.is_locked(host0)
-    assert token != ''
+    assert token != ""
     time.sleep(2)
     assert locks.is_locked(host0)
     time.sleep(9)
@@ -95,4 +95,4 @@ def test_unlock_unlocked():
 
     assert not locks.is_locked(host0)
     with raises(HostNotLocked):
-        locks.unlock_host(host0, '')
+        locks.unlock_host(host0, "")

@@ -1,8 +1,0 @@
-bottle>=0.12.16
-pytest>=4.3.1
-pytest-cov>=2.6.1
-requests>=2.21.0
-pycodestyle>=2.5.0
-codecov
-openqa_client
-cfg_load
