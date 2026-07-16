@@ -10,8 +10,10 @@ class Logging:
         self.logger = logging.getLogger(name)
         self.set_level(level)
 
-        formatter = logging.Formatter(fmt="%(asctime)s %(name)s.%(levelname)s: %(message)s",
-                                      datefmt="%Y.%m.%d %H:%M:%S")
+        formatter = logging.Formatter(
+            fmt="%(asctime)s %(name)s.%(levelname)s: %(message)s",
+            datefmt="%Y.%m.%d %H:%M:%S",
+        )
 
         handler = logging.StreamHandler(stream=sys.stdout)
         handler.setFormatter(formatter)
@@ -31,7 +33,6 @@ class Logging:
             self.logger.setLevel(logging.CRITICAL)
         else:
             self.logger.setLevel(logging.NOTSET)
-
 
     def debug(self, msg):
         self.logger.debug(msg)

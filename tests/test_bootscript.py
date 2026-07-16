@@ -25,7 +25,7 @@ def test_set():
     assert bs.get("10.0.0.1") == "bar"
 
     count = 0
-    while (count < 1000000):
+    while count < 1000000:
         bs.set("10.0.0.1", "bar")
         bs.set("10.0.0.2", "foobar")
         assert bs.get("10.0.0.1") == "bar"
@@ -41,7 +41,7 @@ def test_get():
     assert bs.get("10.0.0.1") == "foo"
 
     with raises(BootscriptNotFound):
-        bla = bs.get("20.21.22.23")
+        _ = bs.get("20.21.22.23")
 
 
 def test_extra():

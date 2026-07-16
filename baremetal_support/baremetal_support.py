@@ -4,12 +4,11 @@ from bottle import Bottle
 
 from .bootscript import Bootscript
 from .lock import Host_Lock
-from . jobid import LatestJob
-from .logging import Logging
+from .jobid import LatestJob
 
 
 if __name__ == "__main__":
-    import argparse
+    pass
 
 
 class Baremetal_Support:
@@ -32,18 +31,25 @@ class Baremetal_Support:
         # unversioned API is deprecated!
         self.log.debug("routing legacy API endpoints")
         self.log.debug("/script.ipxe [GET]")
-        self._app.route('/script.ipxe',
-                        method="GET",
-                        callback=self._bootscript.http_get_bootscript_for_peer)
+        self._app.route(
+            "/script.ipxe",
+            method="GET",
+            callback=self._bootscript.http_get_bootscript_for_peer,
+        )
         self.log.debug("/<addr>/script.ipxe [POST][GET]")
-        self._app.route('/<addr>/script.ipxe',
-                        method="POST",
-                        callback=self._bootscript.http_set_bootscript)
-        self._app.route('/<addr>/script.ipxe',
-                        method="GET",
-                        callback=self._bootscript.http_get_bootscript)
+        self._app.route(
+            "/<addr>/script.ipxe",
+            method="POST",
+            callback=self._bootscript.http_set_bootscript,
+        )
+        self._app.route(
+            "/<addr>/script.ipxe",
+            method="GET",
+            callback=self._bootscript.http_get_bootscript,
+        )
 
         # bootscript API
+
     def start(self):
         self.log.info("Starting baremetal support service")
         self._app.run(host=self._host, port=self._port, debug=True)

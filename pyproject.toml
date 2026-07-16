@@ -1,0 +1,26 @@
+[project]
+name = "baremetal_support"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "bottle>=0.12.16",
+    "requests>=2.21.0",
+    "openqa_client",
+    "cfg_load",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15",
+    "ty>=0.0.26",
+    "pytest>=4.3.1",
+    "pytest-cov>=2.6.1",
+    "codecov",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

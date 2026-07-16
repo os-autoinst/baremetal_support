@@ -7,27 +7,35 @@ from baremetal_support.logging import Logging
 import yaml
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-l", "--listen",
-                        help="hostname to listen on - defaults to all")
-    parser.add_argument("-p", "--port",
-                        type=int,
-                        help="specify listening port - defaults to 8080")
-    parser.add_argument("-i", "--instance",
-                        help="specify openQA instance - defaults to http://openqa.suse.de")
-    parser.add_argument("-m", "--loglevel",
-                        help="Loglevel to use, one of DEBUG, INFO, WARNING, ERROR, CRITICAL, default is INFO")
-    parser.add_argument("-c", "--config",
-                        help="Specify configuration file to use. Will not use a default. "
-                        "command line settings override settings in the config file")
+    parser.add_argument("-l", "--listen", help="hostname to listen on - defaults to all")
+    parser.add_argument("-p", "--port", type=int, help="specify listening port - defaults to 8080")
+    parser.add_argument(
+        "-i",
+        "--instance",
+        help="specify openQA instance - defaults to http://openqa.suse.de",
+    )
+    parser.add_argument(
+        "-m",
+        "--loglevel",
+        help="Loglevel to use, one of DEBUG, INFO, WARNING, ERROR, CRITICAL, default is INFO",
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        help="Specify configuration file to use. Will not use a default. "
+        "command line settings override settings in the config file",
+    )
 
     args = parser.parse_args()
 
     if args.config:
-        with open(args.config, "r",) as ymlfile:
+        with open(
+            args.config,
+            "r",
+        ) as ymlfile:
             conf = yaml.safe_load(ymlfile)
             cfg = conf["baremetal_support"]
     if args.port:
