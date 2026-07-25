@@ -27,7 +27,7 @@ class LatestJob:
                 return [[job] for job in jobs if job["result"] in ["passed", "softfailed"]][-1][0]
             else:
                 raise LatestJobNotFound("no such job found")
-        except Exception:  # noqa: BLE001
+        except Exception:  # ruff: ignore[blind-except]
             raise LatestJobNotFound("no such job found")
 
     def http_get_latest_job(self, arch, distri, flavor, version, test):

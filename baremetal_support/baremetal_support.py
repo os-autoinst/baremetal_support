@@ -6,9 +6,6 @@ from .bootscript import Bootscript
 from .jobid import LatestJob
 from .lock import Host_Lock
 
-if __name__ == "__main__":
-    pass
-
 
 class Baremetal_Support:
     def __init__(self, host, port, logger, instance):
