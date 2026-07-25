@@ -1,14 +1,13 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-import pytest
-import requests
-
 import signal
-
 from multiprocessing import Process
 from time import sleep
 from unittest.mock import MagicMock
+
+import pytest
+import requests
 
 from baremetal_support.baremetal_support import Baremetal_Support
 from baremetal_support.logging import Logging

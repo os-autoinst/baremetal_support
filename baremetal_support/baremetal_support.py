@@ -3,9 +3,8 @@
 from bottle import Bottle
 
 from .bootscript import Bootscript
-from .lock import Host_Lock
 from .jobid import LatestJob
-
+from .lock import Host_Lock
 
 if __name__ == "__main__":
     pass

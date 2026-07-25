@@ -20,10 +20,49 @@ dev = [
 
 [tool.ruff]
 line-length = 120
+preview = true
+
+[tool.ruff.lint]
+extend-select = [
+    "E", "F", "D", "Q", "PL",
+    "T100", "T2", "TD", "W", "I", "ERA", "B", "SIM", "C4", "T10", "FIX",
+    "ISC", "ICN", "INP", "PIE", "T20", "RSE", "RET", "SLF", "FURB", "EXE",
+    "BLE", "A", "DTZ", "LOG", "G", "C90", "PERF", "PGH", "ARG", "RUF", "ANN",
+    "S", "FBT", "TRY", "DOC", "YTT", "ASYNC", "COM", "CPY", "EM", "INT", "PYI",
+    "PT", "SLOT", "TID", "TC", "PTH", "FLY", "NPY", "PD", "N", "PLE", "PLR",
+    "PLW", "FA", "UP",
+]
+ignore = [
+    "D203", "PLC1802", "D213", "PLR0904", "DOC201", "DOC501", "COM812",
+    "D100", "D101", "D102", "D103", "D104", "D107", "D400", "D415",
+    "ANN001", "ANN002", "ANN201", "ANN202", "ANN204", "ANN205", "ANN206", "ANN401",
+    "G003", "G004",
+    "PLR0914", "PLR0915", "PLR2004",
+    "SLF001",
+    "S113",
+    "TRY003", "TRY300",
+    "PLC0415",
+    "N801", "N818",
+    "PT013",
+    "EM101",
+    "CPY001", "PLW1514", "PTH123", "S104", "SIM102", "SIM223", "SIM110", "SIM103",
+    "E303", "D403", "TRY400", "B904", "PLR6301", "RET505", "RET506", "RET507",
+    "A002", "TRY301", "TRY203", "PLR6201", "FBT001", "FBT002", "FBT003",
+    "PLC1901", "T201", "PLR6104",
+    "redundant-open-modes", "unnecessary-if", "too-many-statements-in-try-clause",
+    "builtin-variable-shadowing", "no-slots-in-str-subclass", "subclass-builtin",
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 9
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "ANN401", "PLR0913", "S101", "S105", "S106", "PLR0917", "D103"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+docstring-code-format = true
 
 [tool.coverage.run]
 source = ["baremetal_support"]

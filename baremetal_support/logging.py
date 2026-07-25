@@ -43,6 +43,9 @@ class Logging:
     def warn(self, msg):
         self.logger.warning(msg)
 
+    def warning(self, msg):
+        self.logger.warning(msg)
+
     def error(self, msg):
         self.logger.error(msg)
 

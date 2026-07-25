@@ -8,8 +8,6 @@ from openqa_client.client import OpenQA_Client
 class LatestJobNotFound(Exception):
     """Raised when no job is found"""
 
-    pass
-
 
 class LatestJob:
     def __init__(self, app, logger, instance="http://openqa.suse.de"):

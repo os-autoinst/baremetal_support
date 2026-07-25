@@ -24,7 +24,8 @@ def test_logging_levels():
 
     # Test warn block
     log_warn = Logging("test_logger_warn", MockLevel("WARN"))
-    log_warn.warn("warn message")
+    log_warn.warning("warn message")
+    log_warn.warn("warn message")  # noqa: G010
 
     # Test error block
     log_error = Logging("test_logger_error", MockLevel("ERROR"))
