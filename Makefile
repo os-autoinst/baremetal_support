@@ -2,7 +2,13 @@ SOURCE_FILES ?= $(shell git ls-files "**.py")
 ISOLATE ?= 1
 
 ifeq ($(ISOLATE),1)
+# Detect if unshare -r -n works in the current environment
+UNSHARE_WORKS := $(shell unshare -r -n true >/dev/null 2>&1 && echo 1 || echo 0)
+ifeq ($(UNSHARE_WORKS),1)
 UNSHARE := unshare -r -n sh -c 'ip link set lo up && "$$0" "$$@"'
+else
+UNSHARE :=
+endif
 else
 UNSHARE :=
 endif

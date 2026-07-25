@@ -198,7 +198,7 @@ def test_online_required():
 
         r = requests.get(url_jobid_bad)
         assert r.status_code != 200
-    except Exception:
+    except requests.RequestException:
         pytest.skip("instance unreachable")
     finally:
         p.terminate()

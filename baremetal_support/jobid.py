@@ -29,7 +29,7 @@ class LatestJob:
                 return [[job] for job in jobs if job["result"] in ["passed", "softfailed"]][-1][0]
             else:
                 raise LatestJobNotFound("no such job found")
-        except Exception:
+        except Exception:  # noqa: BLE001
             raise LatestJobNotFound("no such job found")
 
     def http_get_latest_job(self, arch, distri, flavor, version, test):
@@ -44,7 +44,7 @@ class LatestJob:
             job = self.get_latest_job(filter)
             bottle.response.content_type = "text/text; charset=utf-8"
             result = job["id"]
-            self.log.info("found job with ID " + result)
+            self.log.info(f"found job with ID {result}")
             return str(result)
         except LatestJobNotFound:
             self.log.info("No such job found")
