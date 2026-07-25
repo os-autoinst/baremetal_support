@@ -25,7 +25,7 @@ preview = true
 [tool.ruff.lint]
 extend-select = [
     "E", "F", "D", "Q", "PL",
-    "T100", "T2", "TD", "W", "I", "ERA", "B", "SIM", "C4", "T10", "FIX",
+    "debugger", "T2", "TD", "W", "I", "ERA", "B", "SIM", "C4", "T10", "FIX",
     "ISC", "ICN", "INP", "PIE", "T20", "RSE", "RET", "SLF", "FURB", "EXE",
     "BLE", "A", "DTZ", "LOG", "G", "C90", "PERF", "PGH", "ARG", "RUF", "ANN",
     "S", "FBT", "TRY", "DOC", "YTT", "ASYNC", "COM", "CPY", "EM", "INT", "PYI",
@@ -33,22 +33,22 @@ extend-select = [
     "PLW", "FA", "UP",
 ]
 ignore = [
-    "D203", "PLC1802", "D213", "PLR0904", "DOC201", "DOC501", "COM812",
-    "D100", "D101", "D102", "D103", "D104", "D107", "D400", "D415",
-    "ANN001", "ANN002", "ANN201", "ANN202", "ANN204", "ANN205", "ANN206", "ANN401",
-    "G003", "G004",
-    "PLR0914", "PLR0915", "PLR2004",
-    "SLF001",
-    "S113",
-    "TRY003", "TRY300",
-    "PLC0415",
-    "N801", "N818",
-    "PT013",
-    "EM101",
-    "CPY001", "PLW1514", "PTH123", "S104", "SIM102", "SIM223", "SIM110", "SIM103",
-    "E303", "D403", "TRY400", "B904", "PLR6301", "RET505", "RET506", "RET507",
-    "A002", "TRY301", "TRY203", "PLR6201", "FBT001", "FBT002", "FBT003",
-    "PLC1901", "T201", "PLR6104",
+    "incorrect-blank-line-before-class", "len-test", "multi-line-summary-second-line", "too-many-public-methods", "docstring-missing-returns", "docstring-missing-exception", "missing-trailing-comma",
+    "undocumented-public-module", "undocumented-public-class", "undocumented-public-method", "undocumented-public-function", "undocumented-public-package", "undocumented-public-init", "missing-trailing-period", "missing-terminal-punctuation",
+    "missing-type-function-argument", "missing-type-args", "missing-return-type-undocumented-public-function", "missing-return-type-private-function", "missing-return-type-special-method", "missing-return-type-static-method", "missing-return-type-class-method", "any-type",
+    "logging-string-concat", "logging-f-string",
+    "too-many-locals", "too-many-statements", "magic-value-comparison",
+    "private-member-access",
+    "request-without-timeout",
+    "raise-vanilla-args", "try-consider-else",
+    "import-outside-top-level",
+    "invalid-class-name", "error-suffix-on-exception-name",
+    "pytest-incorrect-pytest-import",
+    "raw-string-in-exception",
+    "missing-copyright-notice", "unspecified-encoding", "builtin-open", "hardcoded-bind-all-interfaces", "collapsible-if", "expr-and-false", "reimplemented-builtin", "needless-bool",
+    "too-many-blank-lines", "first-word-uncapitalized", "error-instead-of-exception", "raise-without-from-inside-except", "no-self-use", "superfluous-else-return", "superfluous-else-raise", "superfluous-else-continue",
+    "builtin-argument-shadowing", "raise-within-try", "useless-try-except", "literal-membership", "boolean-type-hint-positional-argument", "boolean-default-value-positional-argument", "boolean-positional-value-in-call",
+    "compare-to-empty-string", "print", "non-augmented-assignment",
     "redundant-open-modes", "unnecessary-if", "too-many-statements-in-try-clause",
     "builtin-variable-shadowing", "no-slots-in-str-subclass", "subclass-builtin",
 ]
@@ -57,7 +57,7 @@ ignore = [
 max-complexity = 9
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["PLR2004", "ANN401", "PLR0913", "S101", "S105", "S106", "PLR0917", "D103"]
+"tests/*" = ["magic-value-comparison", "any-type", "too-many-arguments", "assert", "hardcoded-password-string", "hardcoded-password-func-arg", "too-many-positional-arguments", "undocumented-public-function"]
 
 [tool.ruff.format]
 quote-style = "double"
