@@ -1,10 +1,11 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-from bottle import Bottle
-import bottle
-from pytest import raises
 import time
+
+import bottle
+from bottle import Bottle
+from pytest import raises
 
 from baremetal_support.lock import Host_Lock, HostAlreadyLocked, HostNotLocked, NotLockOwner
 from baremetal_support.logging import Logging

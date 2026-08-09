@@ -1,14 +1,13 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-import bottle
 import socket
+
+import bottle
 
 
 class BootscriptNotFound(Exception):
     """Raised when the address is invalid"""
-
-    pass
 
 
 class Bootscript:
@@ -51,7 +50,7 @@ class Bootscript:
         try:
             socket.inet_aton(addr)
             return True
-        except socket.error:
+        except OSError:
             return False
 
     def http_get_bootscript_for_peer(self):

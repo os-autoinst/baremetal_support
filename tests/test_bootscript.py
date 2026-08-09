@@ -1,9 +1,9 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-from bottle import Bottle
-import bottle
 import io
+
+import bottle
 from pytest import raises
 
 from baremetal_support.bootscript import Bootscript, BootscriptNotFound
@@ -13,7 +13,7 @@ logger = Logging("baremetal support", "DEBUG")
 
 
 def test_set():
-    app = Bottle()
+    app = bottle.Bottle()
     # test if the key is present after setting the value
     bs = Bootscript(app, logger)
     bs.set("10.0.0.1", "foo")
@@ -36,7 +36,7 @@ def test_set():
 
 
 def test_get():
-    app = Bottle()
+    app = bottle.Bottle()
     # retrieve value after setting it
     bs = Bootscript(app, logger)
     bs.set("10.0.0.1", "foo")
@@ -47,7 +47,7 @@ def test_get():
 
 
 def test_extra():
-    app = Bottle()
+    app = bottle.Bottle()
     # ensure a new object does not contain entries
     bs = Bootscript(app, logger)
     assert len(bs.bootscript) == 0
@@ -59,7 +59,7 @@ def test_extra():
 
 
 def test_http_get_bootscript_for_peer():
-    app = Bottle()
+    app = bottle.Bottle()
     bs = Bootscript(app, logger)
     bs.set("10.0.0.1", "foo")
     bottle.request.environ["REMOTE_ADDR"] = "10.0.0.1"
@@ -68,21 +68,21 @@ def test_http_get_bootscript_for_peer():
 
 
 def test_http_get_bootscript_invalid_ip():
-    app = Bottle()
+    app = bottle.Bottle()
     bs = Bootscript(app, logger)
     bs.http_get_bootscript("invalid_ip")
     assert "400" in bottle.response.status
 
 
 def test_http_get_bootscript_not_found():
-    app = Bottle()
+    app = bottle.Bottle()
     bs = Bootscript(app, logger)
     res = bs.http_get_bootscript("10.0.0.2")
     assert "404" in res.status
 
 
 def test_http_set_bootscript():
-    app = Bottle()
+    app = bottle.Bottle()
     bs = Bootscript(app, logger)
     bottle.request.environ["wsgi.input"] = io.BytesIO(b"my_custom_script")
     bottle.request.environ["CONTENT_LENGTH"] = str(len(b"my_custom_script"))
@@ -92,7 +92,7 @@ def test_http_set_bootscript():
 
 
 def test_http_set_bootscript_invalid():
-    app = Bottle()
+    app = bottle.Bottle()
     bs = Bootscript(app, logger)
     bs.http_set_bootscript("invalid_ip")
     assert "400" in bottle.response.status

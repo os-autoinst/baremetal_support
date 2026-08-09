@@ -1,15 +1,14 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-from bottle import response
 import uuid
 from threading import Lock, Timer
+
+from bottle import response
 
 
 class HostAlreadyLocked(Exception):
     """Raised when a host should be locked but is already locked"""
-
-    pass
 
 
 class HostNotLocked(Exception):
@@ -42,7 +41,7 @@ class Host_Lock:
         )
 
     def my_timer(self, host):
-        self.log.warn("Timer expired, unlocking " + host)
+        self.log.warning("Timer expired, unlocking " + host)
         self.unlock_host(host, "", True)
 
     def is_locked(self, host):

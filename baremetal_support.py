@@ -2,10 +2,10 @@
 # Copyright (C) 2019-2021 SUSE LLC
 import argparse
 
-from baremetal_support.baremetal_support import Baremetal_Support
-from baremetal_support.logging import Logging
 import yaml
 
+from baremetal_support.baremetal_support import Baremetal_Support
+from baremetal_support.logging import Logging
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

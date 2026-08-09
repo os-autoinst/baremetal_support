@@ -1,9 +1,10 @@
 # Copyright (C) 2020-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-from bottle import Bottle
+from unittest.mock import MagicMock, patch
+
 import bottle
-from unittest.mock import patch, MagicMock
+from bottle import Bottle
 from pytest import raises
 
 from baremetal_support.jobid import LatestJob, LatestJobNotFound
@@ -19,9 +20,8 @@ def test_exception_mocked():
     mock_client_inst = MagicMock()
     mock_client_inst.openqa_request.return_value = {"jobs": []}
 
-    with patch("baremetal_support.jobid.OpenQA_Client", return_value=mock_client_inst):
-        with raises(LatestJobNotFound):
-            _ = lj.get_latest_job({"arch": "MIPS"})
+    with patch("baremetal_support.jobid.OpenQA_Client", return_value=mock_client_inst), raises(LatestJobNotFound):
+        _ = lj.get_latest_job({"arch": "MIPS"})
 
 
 def test_get_mocked():
@@ -54,9 +54,8 @@ def test_get_mocked_no_passed_jobs():
         ]
     }
 
-    with patch("baremetal_support.jobid.OpenQA_Client", return_value=mock_client_inst):
-        with raises(LatestJobNotFound):
-            _ = lj.get_latest_job({"arch": "x86_64"})
+    with patch("baremetal_support.jobid.OpenQA_Client", return_value=mock_client_inst), raises(LatestJobNotFound):
+        _ = lj.get_latest_job({"arch": "x86_64"})
 
 
 def test_http_get_latest_job_success():
