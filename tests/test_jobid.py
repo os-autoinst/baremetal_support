@@ -4,7 +4,6 @@
 from unittest.mock import MagicMock, patch
 
 import bottle
-from bottle import Bottle
 from pytest import raises
 
 from baremetal_support.jobid import LatestJob, LatestJobNotFound
@@ -14,7 +13,7 @@ logger = Logging("baremetal support", "DEBUG")
 
 
 def test_exception_mocked():
-    app = Bottle()
+    app = bottle.Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -25,7 +24,7 @@ def test_exception_mocked():
 
 
 def test_get_mocked():
-    app = Bottle()
+    app = bottle.Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -43,7 +42,7 @@ def test_get_mocked():
 
 
 def test_get_mocked_no_passed_jobs():
-    app = Bottle()
+    app = bottle.Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -59,7 +58,7 @@ def test_get_mocked_no_passed_jobs():
 
 
 def test_http_get_latest_job_success():
-    app = Bottle()
+    app = bottle.Bottle()
     lj = LatestJob(app, logger)
     with patch.object(lj, "get_latest_job", return_value={"id": "12345"}):
         res = lj.http_get_latest_job("x86_64", "opensuse", "DVD", "Tumbleweed", "create_hdd_textmode")
@@ -68,7 +67,7 @@ def test_http_get_latest_job_success():
 
 
 def test_http_get_latest_job_not_found():
-    app = Bottle()
+    app = bottle.Bottle()
     lj = LatestJob(app, logger)
     with patch.object(lj, "get_latest_job", side_effect=LatestJobNotFound("no such job found")):
         lj.http_get_latest_job("x86_64", "opensuse", "DVD", "Tumbleweed", "create_hdd_textmode")
