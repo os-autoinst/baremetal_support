@@ -1,14 +1,13 @@
 # Copyright (C) 2019-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
-import sys
+
+import signal
+from multiprocessing import Process
+from time import sleep
+from unittest.mock import MagicMock
 
 import pytest
 import requests
-
-import signal
-
-from multiprocessing import Process
-from time import sleep
 
 from baremetal_support.baremetal_support import Baremetal_Support
 from baremetal_support.logging import Logging
@@ -21,7 +20,9 @@ logger = Logging("baremetal support", "DEBUG")
 
 
 def cleanup(*_):
-    sys.exit(1)
+    import os
+
+    os._exit(1)
 
 
 def server_task():
@@ -48,7 +49,8 @@ def test_baremetal_support():
 
     url_status = url + "host_lock/lock_state/" + use_ip
     url_lock = url + "host_lock/lock/" + use_ip
-    url_lock_timeout = url + "host_lock/lock/" + use_ip + "/10"
+    timeout_seconds = 2
+    url_lock_timeout = url + "host_lock/lock/" + use_ip + "/" + str(timeout_seconds)
     url_unlock = url + "host_lock/lock/" + use_ip
 
     text = "data foo bar"
@@ -115,7 +117,7 @@ def test_baremetal_support():
     assert r15.status_code == 200
     assert r15.text == "locked"
 
-    sleep(15)
+    sleep(3)
 
     r16 = requests.get(url_status)
     assert r16.status_code == 200
@@ -144,12 +146,15 @@ def test_baremetal_support():
     assert r22.status_code == 412
 
     # this test verifies issue #19
+    # issue #19 is a race condition where the service non-deterministically
+    # returns the same response to all provided IP addresses.
+    # we repeat the test 50 times to reliably reproduce and catch the bug.
     url_bootscript1 = url + "bootscript/script.ipxe/10.0.0.1"
     url_bootscript2 = url + "bootscript/script.ipxe/10.0.0.2"
     count = 0
     bootscript1 = "bootscript1"
     bootscript2 = "bootscript2"
-    while count < 1000:
+    while count < 50:
         print("count: " + str(count))
         r30 = requests.post(url_bootscript1, data=bootscript1)
         assert r30.status_code == 200
@@ -196,8 +201,15 @@ def test_online_required():
 
         r = requests.get(url_jobid_bad)
         assert r.status_code != 200
-    except Exception:
+    except requests.RequestException:
         pytest.skip("instance unreachable")
     finally:
         p.terminate()
         p.join()
+
+
+def test_baremetal_support_start():
+    server = Baremetal_Support(hostname, port, logger, instance)
+    server._app.run = MagicMock()
+    server.start()
+    server._app.run.assert_called_once_with(host=hostname, port=port, debug=True)

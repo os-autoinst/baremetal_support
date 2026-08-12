@@ -20,7 +20,55 @@ dev = [
 
 [tool.ruff]
 line-length = 120
+preview = true
+
+[tool.ruff.lint]
+extend-select = [
+    "E", "F", "D", "Q", "PL",
+    "debugger", "T2", "TD", "W", "I", "ERA", "B", "SIM", "C4", "T10", "FIX",
+    "ISC", "ICN", "INP", "PIE", "T20", "RSE", "RET", "SLF", "FURB", "EXE",
+    "BLE", "A", "DTZ", "LOG", "G", "C90", "PERF", "PGH", "ARG", "RUF", "ANN",
+    "S", "FBT", "TRY", "DOC", "YTT", "ASYNC", "COM", "CPY", "EM", "INT", "PYI",
+    "PT", "SLOT", "TID", "TC", "PTH", "FLY", "NPY", "PD", "N", "PLE", "PLR",
+    "PLW", "FA", "UP",
+]
+ignore = [
+    "incorrect-blank-line-before-class", "len-test", "multi-line-summary-second-line", "too-many-public-methods", "docstring-missing-returns", "docstring-missing-exception", "missing-trailing-comma",
+    "undocumented-public-module", "undocumented-public-class", "undocumented-public-method", "undocumented-public-function", "undocumented-public-package", "undocumented-public-init", "missing-trailing-period", "missing-terminal-punctuation",
+    "missing-type-function-argument", "missing-type-args", "missing-type-kwargs", "missing-return-type-undocumented-public-function", "missing-return-type-private-function", "missing-return-type-special-method", "missing-return-type-static-method", "missing-return-type-class-method", "any-type",
+    "logging-string-concat",
+    "too-many-locals", "too-many-statements", "magic-value-comparison",
+    "private-member-access",
+    "request-without-timeout",
+    "raise-vanilla-args", "try-consider-else",
+    "import-outside-top-level",
+    "invalid-class-name", "error-suffix-on-exception-name",
+    "pytest-incorrect-pytest-import",
+    "raw-string-in-exception",
+    "missing-copyright-notice", "unspecified-encoding", "builtin-open", "hardcoded-bind-all-interfaces", "collapsible-if", "expr-and-false", "reimplemented-builtin", "needless-bool",
+    "too-many-blank-lines", "first-word-uncapitalized", "error-instead-of-exception", "raise-without-from-inside-except", "no-self-use", "superfluous-else-return", "superfluous-else-raise", "superfluous-else-continue",
+    "builtin-argument-shadowing", "raise-within-try", "useless-try-except", "literal-membership", "boolean-type-hint-positional-argument", "boolean-default-value-positional-argument", "boolean-positional-value-in-call",
+    "compare-to-empty-string", "print", "non-augmented-assignment",
+    "redundant-open-modes", "unnecessary-if", "too-many-statements-in-try-clause",
+    "builtin-variable-shadowing", "no-slots-in-str-subclass", "subclass-builtin",
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 9
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["magic-value-comparison", "any-type", "too-many-arguments", "assert", "hardcoded-password-string", "hardcoded-password-func-arg", "too-many-positional-arguments", "undocumented-public-function"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+docstring-code-format = true
+
+[tool.coverage.run]
+source = ["baremetal_support"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true

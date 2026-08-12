@@ -3,12 +3,8 @@
 from bottle import Bottle
 
 from .bootscript import Bootscript
-from .lock import Host_Lock
 from .jobid import LatestJob
-
-
-if __name__ == "__main__":
-    pass
+from .lock import Host_Lock
 
 
 class Baremetal_Support:

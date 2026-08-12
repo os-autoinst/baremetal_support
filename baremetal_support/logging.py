@@ -34,17 +34,17 @@ class Logging:
         else:
             self.logger.setLevel(logging.NOTSET)
 
-    def debug(self, msg):
-        self.logger.debug(msg)
+    def debug(self, msg, *args, **kwargs):
+        self.logger.debug(msg, *args, **kwargs)
 
-    def info(self, msg):
-        self.logger.info(msg)
+    def info(self, msg, *args, **kwargs):
+        self.logger.info(msg, *args, **kwargs)
 
-    def warn(self, msg):
-        self.logger.warning(msg)
+    def warning(self, msg, *args, **kwargs):
+        self.logger.warning(msg, *args, **kwargs)
 
-    def error(self, msg):
-        self.logger.error(msg)
+    def error(self, msg, *args, **kwargs):
+        self.logger.error(msg, *args, **kwargs)
 
-    def critical(self, msg):
-        self.logger.critical(msg)
+    def critical(self, msg, *args, **kwargs):
+        self.logger.critical(msg, *args, **kwargs)
