@@ -3,7 +3,7 @@
 
 import socket
 
-import bottle
+from bottle import request, response
 
 
 class BootscriptNotFound(Exception):
@@ -54,34 +54,34 @@ class Bootscript:
             return False
 
     def http_get_bootscript_for_peer(self):
-        addr = bottle.request.environ.get("REMOTE_ADDR")
+        addr = request.environ.get("REMOTE_ADDR")
         self.log.debug("http request: get bootscript for peer (" + addr + ")")
         return self.http_get_bootscript(addr)
 
     def http_get_bootscript(self, addr):
         try:
             if self._is_ip(addr):
-                bottle.response.content_type = "text/text; charset=utf-8"
+                response.content_type = "text/text; charset=utf-8"
                 self.log.debug("http request: get bootscript for " + addr)
                 return self.get(addr)
             else:
                 # invalid address specified
-                bottle.response.status = 400
+                response.status = 400
         except BootscriptNotFound:
             # no script found for this IP
             self.log.debug("http request: no bootscript found for " + addr)
-            bottle.response.body = "not found"
-            bottle.response.status = "404 Not Found"
-            return bottle.response
+            response.body = "not found"
+            response.status = "404 Not Found"
+            return response
 
     def http_set_bootscript(self, addr):
         if self._is_ip(addr):
-            postdata = bottle.request.body.read()
+            postdata = request.body.read()
             script = postdata.decode("utf-8")
             self.log.info("http request: set bootscript for " + addr)
             self.log.debug(script)
             self.set(addr, script)
-            bottle.response.status = 200
+            response.status = 200
         else:
             self.log.debug("http request: not setting bootscript, invalid address given: " + addr)
-            bottle.response.status = 400
+            response.status = 400
