@@ -3,7 +3,7 @@
 
 from unittest.mock import MagicMock, patch
 
-import bottle
+from bottle import Bottle, response
 from pytest import raises
 
 from baremetal_support.jobid import LatestJob, LatestJobNotFound
@@ -13,7 +13,7 @@ logger = Logging("baremetal support", "DEBUG")
 
 
 def test_exception_mocked():
-    app = bottle.Bottle()
+    app = Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -24,7 +24,7 @@ def test_exception_mocked():
 
 
 def test_get_mocked():
-    app = bottle.Bottle()
+    app = Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -42,7 +42,7 @@ def test_get_mocked():
 
 
 def test_get_mocked_no_passed_jobs():
-    app = bottle.Bottle()
+    app = Bottle()
     lj = LatestJob(app, logger, "http://mock-openqa")
 
     mock_client_inst = MagicMock()
@@ -58,17 +58,17 @@ def test_get_mocked_no_passed_jobs():
 
 
 def test_http_get_latest_job_success():
-    app = bottle.Bottle()
+    app = Bottle()
     lj = LatestJob(app, logger)
     with patch.object(lj, "get_latest_job", return_value={"id": "12345"}):
         res = lj.http_get_latest_job("x86_64", "opensuse", "DVD", "Tumbleweed", "create_hdd_textmode")
         assert res == "12345"
-        assert bottle.response.content_type == "text/text; charset=utf-8"
+        assert response.content_type == "text/text; charset=utf-8"
 
 
 def test_http_get_latest_job_not_found():
-    app = bottle.Bottle()
+    app = Bottle()
     lj = LatestJob(app, logger)
     with patch.object(lj, "get_latest_job", side_effect=LatestJobNotFound("no such job found")):
         lj.http_get_latest_job("x86_64", "opensuse", "DVD", "Tumbleweed", "create_hdd_textmode")
-        assert bottle.response.status == "404 Not Found"
+        assert response.status == "404 Not Found"

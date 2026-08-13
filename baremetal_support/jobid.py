@@ -1,7 +1,7 @@
 # Copyright (C) 2020-2021 SUSE LLC
 # SPDX-License-Identifier: GPL-3.0
 
-import bottle
+from bottle import response
 from openqa_client.client import OpenQA_Client
 
 
@@ -40,11 +40,11 @@ class LatestJob:
         self.log.info("HTTP: get latest job for " + distri + " " + version + " " + arch + " " + flavor + " " + test)
         try:
             job = self.get_latest_job(filter)
-            bottle.response.content_type = "text/text; charset=utf-8"
+            response.content_type = "text/text; charset=utf-8"
             result = job["id"]
             self.log.info("found job with ID %s", result)
             return str(result)
         except LatestJobNotFound:
             self.log.info("No such job found")
-            bottle.response.body = "not found"
-            bottle.response.status = "404 Not Found"
+            response.body = "not found"
+            response.status = "404 Not Found"

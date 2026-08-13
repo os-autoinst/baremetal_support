@@ -3,7 +3,7 @@
 
 import time
 
-import bottle
+from bottle import Bottle, response
 from pytest import raises
 
 from baremetal_support.lock import Host_Lock, HostAlreadyLocked, HostNotLocked, NotLockOwner
@@ -16,7 +16,7 @@ logger = Logging("baremetal support", "DEBUG")
 
 
 def test_my_timer():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
 
     assert not locks.is_locked(host0)
@@ -31,7 +31,7 @@ def test_my_timer():
 
 
 def test_is_locked():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
 
     assert not locks.is_locked(host0)
@@ -57,14 +57,14 @@ def test_is_locked():
 
 
 def test_lock_host():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     locks.lock_host(host1)
     assert locks.locks[host1]
 
 
 def test_unlock_host():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     token = locks.lock_host(host1)
     assert locks.locks[host1]
@@ -73,7 +73,7 @@ def test_unlock_host():
 
 
 def test_lock_already_locked():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
 
     assert not locks.is_locked(host0)
@@ -91,7 +91,7 @@ def test_lock_already_locked():
 
 
 def test_unlock_unlocked():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
 
     assert not locks.is_locked(host0)
@@ -100,7 +100,7 @@ def test_unlock_unlocked():
 
 
 def test_not_lock_owner():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     locks.lock_host(host0)
     with raises(NotLockOwner):
@@ -108,7 +108,7 @@ def test_not_lock_owner():
 
 
 def test_http_lock_success():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     res = locks.http_lock(host0)
     assert "200" in res.status
@@ -116,15 +116,15 @@ def test_http_lock_success():
 
 
 def test_http_lock_already_locked():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     locks.lock_host(host0)
     locks.http_lock(host0)
-    assert "412" in bottle.response.status
+    assert "412" in response.status
 
 
 def test_http_unlock_success():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     token = locks.lock_host(host0)
     res = locks.http_unlock(host0, token)
@@ -132,7 +132,7 @@ def test_http_unlock_success():
 
 
 def test_http_unlock_not_locked():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     res = locks.http_unlock(host0, "some_token")
     assert "412" in res.status
@@ -140,7 +140,7 @@ def test_http_unlock_not_locked():
 
 
 def test_http_unlock_not_owner():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     locks.lock_host(host0)
     res = locks.http_unlock(host0, "wrong_token")
@@ -149,7 +149,7 @@ def test_http_unlock_not_owner():
 
 
 def test_http_lock_state():
-    app = bottle.Bottle()
+    app = Bottle()
     locks = Host_Lock(app, logger)
     res = locks.http_lock_state(host0)
     assert res.body == "unlocked"
